@@ -6,6 +6,10 @@ COLOUR_END=\033[0m
 # setting source code directory
 APP_SOURCE_CODE_DIR='./testglossary'
 
+install: # install project dependencies from requirements.txt file
+	@echo "$(COLOUR_RED)Start installing process ...$(COLOUR_END)"
+	pip install -r ./requirements.txt	
+
 test: # execute all tests
 	@echo "$(COLOUR_GREEN)Executing tests ...$(COLOUR_END)"
 	python -m pytest
