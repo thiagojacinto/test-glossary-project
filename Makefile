@@ -18,9 +18,13 @@ lint: # use linter
 	@echo "$(COLOUR_GREEN)Running lint process ...$(COLOUR_END)"
 	python -m black $(APP_SOURCE_CODE_DIR) ; \
 		python -m isort --profile black $(APP_SOURCE_CODE_DIR) ; \
-		python -m autopep8 $(APP_SOURCE_CODE_DIR)
+		python -m autopep8 --in-place --recursive --verbose $(APP_SOURCE_CODE_DIR)
 
 help: # list all Makefile commands
 	@echo "$(COLOUR_BLUE)These are all the avalaible commands ...$(COLOUR_END)"
 	grep ':' Makefile
 
+docker-build: # builds a new container image
+	@echo "$(COLOUR_RED)Building a Docker image ...$(COLOUR_END)"
+	GET_NOW=$(date +%s) ; \
+	docker build -t "testglossaryapi:${GET_NOW}" ./Dockerfile
