@@ -1,3 +1,8 @@
+# docker hub user
+DOCKER_HUB_USERNAME=thiagojacinto
+DOCKER_HUB_REPOSITORY=test-glossary-api
+
+# shell colors
 COLOUR_GREEN=\033[0;32m
 COLOUR_RED=\033[0;31m
 COLOUR_BLUE=\033[0;34m
@@ -24,7 +29,8 @@ help: # list all Makefile commands
 	@echo "$(COLOUR_BLUE)These are all the avalaible commands ...$(COLOUR_END)"
 	grep ':' Makefile
 
+docker-build: GET_NOW := $(shell date +%s)
 docker-build: # builds a new container image
 	@echo "$(COLOUR_RED)Building a Docker image ...$(COLOUR_END)"
-	GET_NOW=$(date +%s) ; \
-	docker build -t "testglossaryapi:${GET_NOW}" ./Dockerfile
+	TAG_NAME="$(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPOSITORY):$(GET_NOW)" ; \
+	docker build -t $${TAG_NAME} . 
