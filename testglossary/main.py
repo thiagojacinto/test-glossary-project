@@ -1,5 +1,3 @@
-from sys import prefix
-
 from fastapi import APIRouter, FastAPI, status
 from fastapi.responses import RedirectResponse
 
@@ -16,6 +14,7 @@ app = FastAPI(
     },
     docs_url="/api/docs",
     redoc_url="/api/redocs",
+    openapi_url="/api/openapi.json"
 )
 active_API_version = API_versions.v1.value
 active_API_version_router = APIRouter(prefix="/{}".format(active_API_version))
