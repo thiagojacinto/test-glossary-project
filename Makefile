@@ -17,7 +17,7 @@ install: # install project dependencies from requirements.txt file
 
 test: # execute all tests
 	@echo "$(COLOUR_GREEN)Executing tests ...$(COLOUR_END)"
-	python -m pytest
+	python -m pytest --verbose
 
 lint: # use linter
 	@echo "$(COLOUR_GREEN)Running lint process ...$(COLOUR_END)"
