@@ -27,7 +27,10 @@ jobs:
     - name: Create staging.env file
       run: |
         touch .staging.env
-        echo DATABASE_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }} >> .staging.env
+        echo DATABASE_CONNECTION_STRING=${DBCS} >> .staging.env
+      env:
+        DBCS: ${{ secrets.DB_CONNECTION_STRING }}
+        
     
     - name: Install dependencies
       run: |
