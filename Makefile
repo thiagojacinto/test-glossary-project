@@ -48,4 +48,6 @@ docker-build: # builds a new container image
 
 help: # list all Makefile commands
 	@echo "$(COLOUR_BLUE)These are all the avalaible commands ...$(COLOUR_END)"
-	grep ': #' Makefile
+	@echo ""
+	@grep ': #' Makefile
+	
