@@ -1,5 +1,2 @@
 site_name: TestGlossary
 theme: readthedocs
-
-API:
-  - v1: 'service/v1.md'
