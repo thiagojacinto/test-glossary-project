@@ -1,9 +1,9 @@
 from fastapi import APIRouter, FastAPI, status
 from fastapi.responses import RedirectResponse
 
-from .internal import health_check
-from .internal.api_versions import API_versions
-from .routers import terms
+from testglossary.internal import health_check
+from testglossary.internal.api_versions import API_versions
+from testglossary.routers import terms
 
 app = FastAPI(
     title="TestGlossary API",
@@ -14,7 +14,7 @@ app = FastAPI(
     },
     docs_url="/api/docs",
     redoc_url="/api/redocs",
-    openapi_url="/api/openapi.json"
+    openapi_url="/api/openapi.json",
 )
 active_API_version = API_versions.v1.value
 active_API_version_router = APIRouter(prefix="/{}".format(active_API_version))
