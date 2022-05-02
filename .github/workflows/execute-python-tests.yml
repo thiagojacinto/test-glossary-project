@@ -27,7 +27,7 @@ jobs:
     - name: Creates .staging.env file
       uses: SpicyPizza/create-envfile@v1.3
       with:
-        envkey_DATABASE_CONNECTION_STRING: ${{ secrets.DATABASE_CONNECTION_STRING }}
+        envkey_DATABASE_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
         file_name: .staging.env
         fail_on_empty: true
     
