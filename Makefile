@@ -17,7 +17,7 @@ install: # install project dependencies from requirements.txt file
 
 test: # execute all tests
 	@echo "$(COLOUR_GREEN)Executing tests ...$(COLOUR_END)"
-	python -m pytest
+	python -m pytest --verbose
 
 lint: # use linter
 	@echo "$(COLOUR_GREEN)Running lint process ...$(COLOUR_END)"
@@ -25,12 +25,29 @@ lint: # use linter
 		python -m isort --profile black $(APP_SOURCE_CODE_DIR) ; \
 		python -m autopep8 --in-place --recursive --verbose $(APP_SOURCE_CODE_DIR)
 
-help: # list all Makefile commands
-	@echo "$(COLOUR_BLUE)These are all the avalaible commands ...$(COLOUR_END)"
-	grep ':' Makefile
+run: # starts uvicorn server with auto reload @ port 8880
+	@echo "$(COLOUR_GREEN)Starting server ...$(COLOUR_END)"
+	uvicorn testglossary.main:app --reload --port=8880
+
+go-prod: # Run in Production environment. Starts uvicorn server with auto reload
+	@echo "$(COLOUR_GREEN)Starting server ...$(COLOUR_END)"
+	PRODUCTION_READY=true uvicorn testglossary.main:app --reload --log-config=log_conf.yaml
+
+gh-deploy: # builds and deploy MkDocs documentation style to GitHub Pages
+	mkdocs gh-deploy --verbose --strict --remote-branch="support/gh-pages"
 
 docker-build: GET_NOW := $(shell date +%s)
 docker-build: # builds a new container image
 	@echo "$(COLOUR_RED)Building a Docker image ...$(COLOUR_END)"
 	TAG_NAME="$(DOCKER_HUB_USERNAME)/$(DOCKER_HUB_REPOSITORY):$(GET_NOW)" ; \
 	docker build -t $${TAG_NAME} . 
+
+#: #########################################
+#: #### Help - Makefile for TestGlossary API
+#: #########################################
+
+help: # list all Makefile commands
+	@echo "$(COLOUR_BLUE)These are all the avalaible commands ...$(COLOUR_END)"
+	@echo ""
+	@grep ': #' Makefile
+	
