@@ -1,26 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
 
-from testglossary.database import connection, entities, interface
+from testglossary.database import db_instance, interface
 from testglossary.internal import exceptions, serializers
 
 router = APIRouter(
     prefix="/terms", tags=["terms"], responses={404: {"description": "Not found"}}
 )
-
-# Create tables
-entities.Base.metadata.create_all(bind=connection.engine)
-
-# Database Dependency
-
-
-def use_db():
-    db = connection.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @router.get(
     path="/",
@@ -34,7 +20,7 @@ async def list_terms(
     | None = Query(
         default=10, title="Number of terms listed by page", example=10, ge=1
     ),
-    db: Session = Depends(use_db),
+    db: Session = Depends(db_instance.use_db),
 ):
     """
     returns a list of terms from the glossary
@@ -65,7 +51,7 @@ async def get_term_by_name(
     page: int | None = Query(default=0, title="Page number", example=0, ge=0),
     terms_per_page: int
     | None = Query(default=5, title="Number of terms listed by page", example=10, ge=1),
-    db: Session = Depends(use_db),
+    db: Session = Depends(db_instance.use_db),
 ):
     """
     Search for a term by its name

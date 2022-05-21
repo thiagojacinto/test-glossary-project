@@ -5,6 +5,8 @@ from testglossary.internal import health_check
 from testglossary.internal.api_versions import API_versions
 from testglossary.routers import terms
 
+from testglossary.database import connection, entities
+
 app = FastAPI(
     title="TestGlossary API",
     description="API service that retrieve information about test concepts as a glossary.",
@@ -31,3 +33,7 @@ async def redirect_root_to():
     return RedirectResponse(
         url=path_redirect, status_code=status.HTTP_308_PERMANENT_REDIRECT
     )
+
+
+# Create tables
+entities.Base.metadata.create_all(bind=connection.engine)
