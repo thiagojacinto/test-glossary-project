@@ -27,11 +27,11 @@ lint: # use linter
 
 run: # starts uvicorn server with auto reload @ port 8880
 	@echo "$(COLOUR_GREEN)Starting server ...$(COLOUR_END)"
-	uvicorn testglossary.main:app --reload --port=8880
+	uvicorn testglossary.main:app --reload --port=8880 --log-config=log_conf.yaml
 
 go-prod: # Run in Production environment. Starts uvicorn server with auto reload
 	@echo "$(COLOUR_GREEN)Starting server ...$(COLOUR_END)"
-	PRODUCTION_READY=true uvicorn testglossary.main:app --reload --log-config=log_conf.yaml
+	PRODUCTION_READY=true uvicorn testglossary.main:app --log-config=log_conf.yaml
 
 gh-deploy: # builds and deploy MkDocs documentation style to GitHub Pages
 	mkdocs gh-deploy --verbose --strict --remote-branch="support/gh-pages"
