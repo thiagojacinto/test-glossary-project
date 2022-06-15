@@ -6,6 +6,7 @@ class TermBase(BaseModel):
 
     name: str
     definition: str
+    acronym: str | None
 
 
 class Term(TermBase):
@@ -13,13 +14,12 @@ class Term(TermBase):
 
     id: int
     language_id: int
-    acronym: str | None
 
     class Config:
         orm_mode = True
 
 
-class CreateTerm(Term):
+class CreateTerm(TermBase):
     version: int
     language_id: int
 

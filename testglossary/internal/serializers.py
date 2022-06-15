@@ -19,3 +19,12 @@ class Paginated_terms_list(Paginated_ouput):
     """
 
     result: list[Term]
+
+
+class Sucessfully_term_created(BaseModel):
+    """
+    A sucessufully response after register a new term into local database
+    """
+
+    result: bool
+    id: int | None

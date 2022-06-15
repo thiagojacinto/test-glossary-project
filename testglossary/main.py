@@ -1,11 +1,10 @@
 from fastapi import APIRouter, FastAPI, status
 from fastapi.responses import RedirectResponse
 
+from testglossary.database import connection, entities
 from testglossary.internal import health_check
 from testglossary.internal.api_versions import API_versions
-from testglossary.routers import terms
-
-from testglossary.database import connection, entities
+from testglossary.routers import refresh_data, terms
 
 app = FastAPI(
     title="TestGlossary API",
@@ -21,6 +20,7 @@ app = FastAPI(
 active_API_version = API_versions.v1.value
 active_API_version_router = APIRouter(prefix="/{}".format(active_API_version))
 
+terms.router.include_router(refresh_data.router)
 active_API_version_router.include_router(terms.router)
 active_API_version_router.include_router(health_check.router)
 
