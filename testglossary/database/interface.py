@@ -41,3 +41,18 @@ def register_new_term(db: Session, term_data: CreateTerm):
     db.commit()
     db.refresh(db_new_term)
     return db_new_term
+
+
+def get_term_by_acronym(
+    db: Session, term_acronym: str, page: int = 0, results_per_page: int = 5
+):
+    """
+    Search for a test term by its acronym
+    """
+    return (
+        db.query(Term)
+        .where(Term.acronym.ilike("%{}%".format(term_acronym)))
+        .offset(page)
+        .limit(results_per_page)
+        .all()
+    )

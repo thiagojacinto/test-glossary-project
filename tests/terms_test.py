@@ -125,3 +125,57 @@ def test_search_term_non_existent(search_term_by):
 
     assert response.status_code == 404
     assert "not" in response.json().get("detail").lower()
+
+
+@pytest.fixture()
+def search_term_by_acronym():
+    def _search_term_by_acronym(search_term="test") -> Response:
+        return client.get("{}/search/by_acronym/{}".format(active_target_url, search_term))
+
+    return _search_term_by_acronym
+
+
+def test_search_acronym_by_known_subject(search_term_by_acronym):
+    assert search_term_by_acronym("test").status_code == 200
+
+
+def test_search_acronym_by_known_subject_and_valid_terms_per_page(search_term_by_acronym):
+    assert search_term_by_acronym("subje?terms_per_page=1").status_code == 200
+
+
+def test_search_acronym_by_known_subject_and_initial_page(search_term_by_acronym):
+    assert search_term_by_acronym("subje?page=0").status_code == 200
+
+
+def test_search_acronym_attempt_with_more_than_10_characters(search_term_by_acronym):
+    longer_sentence = "this-is-a-longer-sentence-more-than-10-caracters"
+
+    assert search_term_by_acronym(longer_sentence).status_code == 422
+
+
+def test_search_acronym_attempt_with_less_than_3_characters(search_term_by_acronym):
+    smaller_sentence = "no"
+
+    assert search_term_by_acronym(smaller_sentence).status_code == 422
+
+
+def test_search_acronym_with_page_path_parameter_should_be_positive(search_term_by_acronym):
+    page_parameter = "aplha?page=-1"
+
+    assert search_term_by_acronym(page_parameter).status_code == 422
+
+
+def test_search_acronym_with_test_term_by_page_path_parameter_should_be_greater_than_one(
+    search_term_by_acronym,
+):
+    page_parameter = "aplha?terms_per_page=0"
+
+    assert search_term_by_acronym(page_parameter).status_code == 422
+
+
+def test_search_acronym_non_existent(search_term_by_acronym):
+    acronym_that_not_exists = "abcdef"
+    response = search_term_by_acronym(acronym_that_not_exists)
+
+    assert response.status_code == 404
+    assert "not" in response.json().get("detail").lower()
