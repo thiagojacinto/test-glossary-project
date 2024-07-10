@@ -7,7 +7,7 @@ h11==0.13.0
 httptools==0.3.0
 idna==3.3
 
-pydantic==1.9.0
+pydantic==1.10.13
 
 python-dotenv==0.19.2
 
