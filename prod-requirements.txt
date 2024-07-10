@@ -20,7 +20,7 @@ uvloop==0.16.0
 
 watchgod==0.7
 websockets==10.2
-zipp==3.7.0
+zipp==3.19.1
 
 SQLAlchemy==1.4.34
 psycopg2==2.9.3
