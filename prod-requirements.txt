@@ -1,7 +1,7 @@
 anyio==3.5.0
 asgiref==3.5.0
 
-fastapi==0.75.0
+fastapi==0.109.1
 
 h11==0.13.0
 httptools==0.3.0
