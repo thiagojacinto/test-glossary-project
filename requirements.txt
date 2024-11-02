@@ -43,7 +43,7 @@ starlette==0.25.0
 toml==0.10.2
 tomli==2.0.1
 typing_extensions==4.1.1
-urllib3==1.26.9
+urllib3==1.26.19
 uvicorn==0.17.5
 uvloop==0.16.0
 watchdog==2.1.6
